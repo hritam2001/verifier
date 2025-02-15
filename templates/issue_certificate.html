@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Certificate - Verifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        form {
+            width: 50%;
+            margin: 0 auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Issue New Certificate</h2>
+    <form method="POST">
+        <label for="recipient">Recipient:</label>
+        <input type="text" name="recipient" id="recipient" required>
+        
+        <label for="cause">Cause of Certificate:</label>
+        <textarea name="cause" id="cause" required></textarea>
+        
+        <button type="submit">Issue Certificate</button>
+    </form>
+</body>
+</html>

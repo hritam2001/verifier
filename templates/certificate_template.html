@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificate</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .certificate { border: 10px solid #55ff00; padding: 50px; width: 80%; margin: auto; }
+        h1 { font-size: 40px; }
+        p { font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <h1>Certificate of Achievement</h1>
+        <p>This is to certify that</p>
+        <h2>{{ recipient }}</h2>
+        <p>has successfully achieved</p>
+        <h3>{{ cause }}</h3>
+        <p>Certificate ID: {{ cert_id }}</p>
+    </div>
+</body>
+</html>
