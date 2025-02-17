@@ -1,22 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        .certificate { border: 10px solid #55ff00; padding: 50px; width: 80%; margin: auto; }
-        h1 { font-size: 40px; }
-        p { font-size: 20px; }
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pinyon+Script|Rochester');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;     /* Center vertically */
+            min-height: 100vh;      /* Ensure full viewport height */
+            background: none;
+        }
+
+        .certificate-container {
+            width: 800px;
+            height: 600px;
+            text-align: center;
+            padding: 20px;
+            border: 5px solid black;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically within container */
+            align-items: center;     /* Center content horizontally within container */
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ... (rest of your CSS styles remain the same) ... */
+
     </style>
 </head>
 <body>
-    <div class="certificate">
-        <h1>Certificate of Achievement</h1>
+    <div class="certificate-container">
+        <h1>Certificate of {{ certificate_of }}</h1>
         <p>This is to certify that</p>
-        <h2>{{ recipient }}</h2>
-        <p>has successfully achieved</p>
-        <h3>{{ cause }}</h3>
-        <p>Certificate ID: {{ cert_id }}</p>
+        <p class="underline">{{ recipient }}</p>
+        <p>{{ cause }}</p>
+        <p class="underline">{{ course }}</p>
+        <p> On : {{ date }}</p>
+
+        <div class="footer">
+            <p><b>We congratulate them</b></p>
+            <p>Verified by <b>VERIFIER</b></p>
+            <p>Date: <b>{{ date }}</b></p>
+            <p>Certificate ID: <b>{{ cert_id }}</b></p>
+        </div>
     </div>
 </body>
 </html>

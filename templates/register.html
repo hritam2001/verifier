@@ -3,83 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Verifier</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ3QZf6p5F5o0h3u24vbhz7Ed/p3x2f8JXw64vN9k1fF6i6G02H9TX06ttZ5" crossorigin="anonymous">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
         }
-        .form-container {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .card {
             width: 100%;
             max-width: 400px;
-        }
-        h2 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-        }
-        .form-group {
-            margin-bottom: 20px;
+            color: white;
         }
         .form-control {
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
         }
         .btn-primary {
             width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border-radius: 10px;
-            background-color: #007bff;
+            background: #ff7eb3;
             border: none;
+            transition: 0.3s;
         }
-        .footer-text {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
+        .btn-primary:hover {
+            background: #ff477e;
         }
-        .footer-text a {
-            color: #007bff;
-            text-decoration: none;
+        .btn-secondary {
+            width: 100%;
+            margin-top: 10px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            transition: 0.3s;
         }
-        .footer-text a:hover {
-            text-decoration: underline;
+        .btn-secondary:hover {
+            background: white;
+            color: #2575fc;
+        }
+        .alert {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Create a New Account</h2>
-        <form action="/register" method="POST">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+
+    <div class="card">
+        <h3 class="mb-3">Create Account</h3>
+        <form id="registerForm">
+            <input type="text" name="name" id="name" class="form-control" placeholder="Full Name" required>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
-        <p class="footer-text">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+
+        <div id="message" class="alert mt-3"></div>
+
+        <!-- Login Button -->
+        <button onclick="window.location.href='/login'" class="btn btn-secondary">Already have an account? Login</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0lzWf/ohcAT2rxq0kx7Qb27dL1RdlJZ4y/f/8g5/puY17mcO" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async function(event) {
+            event.preventDefault();  // Prevent page reload
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const messageBox = document.getElementById("message");
+
+            try {
+                const response = await fetch("/register", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    messageBox.className = "alert alert-success";
+                    messageBox.innerHTML = result.success;
+                } else {
+                    messageBox.className = "alert alert-danger";
+                    messageBox.innerHTML = result.error;
+                }
+                messageBox.style.display = "block";  // Show message box
+
+            } catch (error) {
+                messageBox.className = "alert alert-danger";
+                messageBox.innerHTML = "Something went wrong. Please try again.";
+                messageBox.style.display = "block";
+            }
+        });
+    </script>
+
 </body>
 </html>
